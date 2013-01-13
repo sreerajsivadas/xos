@@ -1,0 +1,45 @@
+//load exhandler and int 7
+load (7,1);
+load (15,9);
+
+//load init
+load (16,13);
+load (17,14);
+load (18,15);
+
+PTBR = 1024;
+PTLR = 4;
+
+//setting page table
+[PTBR + 0 ] = 16;
+[PTBR + 1 ] = 11;
+[PTBR + 2 ] = 17;
+[PTBR + 3 ] = 11;
+[PTBR + 4 ] = 18;
+[PTBR + 5 ] = 11;
+[PTBR + 6 ] = 19;
+[PTBR + 7 ] = 11;
+
+//load disk free list and FAT
+load (6,11);		//disk free list
+load (5,10);		//FAT
+
+//setting system wide table to -1
+alias count R8;
+count = 0;
+while (count <= 128) do
+	[FILE_TABLE + count] = -1;
+endwhile;
+
+[READY_LIST + 0 ] = 0;
+[READY_LIST + 1 ] = 2;
+
+count = 15;
+while (count <= 30) do
+	[READY_LIST + count] = -1;
+endwhile;
+
+
+SP = 3*512;
+[19*512] = 0;
+ireturn;
