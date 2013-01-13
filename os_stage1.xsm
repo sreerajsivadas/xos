@@ -1,0 +1,6 @@
+START
+MOV R0, "Hello World"
+MOV T0, R0
+OUT T0
+HALT
+IRET
